@@ -2,53 +2,66 @@
 #include<queue>
 using namespace std;
 
-class treeNode{
+class Node{
 public:
     int data;
-    treeNode* left;
-    treeNode* right;
+    Node* left;
+    Node* right;
 
-    treeNode(int val){
+    Node(int val){
         data=val;
         left=nullptr;
         right=nullptr;
     }
     };
 
-     void preorder(treeNode* root) {
-    if(root == nullptr) return;
+Node* insert(Node* root, int val) {
+    if (root == nullptr)
+        return new Node(val);
+
+    if (val < root->data)
+        root->left = insert(root->left, val);
+    else if (val > root->data)
+        root->right = insert(root->right, val);
+
+    return root;
+}
+void preorder(Node* root) {
+    if (root == nullptr)
+        return;
 
     cout << root->data << " ";
     preorder(root->left);
     preorder(root->right);
 }
 
-    void inorder(treeNode* root) {
-    if(root == nullptr) return;
+void inorder(Node* root) {
+    if (root == nullptr)
+        return;
 
     inorder(root->left);
     cout << root->data << " ";
     inorder(root->right);
 }
 
-  void postorder(treeNode* root) {
-    if(root == nullptr) return;
+void postorder(Node* root) {
+    if (root == nullptr)
+        return;
 
     postorder(root->left);
     postorder(root->right);
     cout << root->data << " ";
-    
 }
 
-void bfs(treeNode* root) {
+void bfs(Node* root) {
     if (root == nullptr)
         return;
 
-    queue<treeNode*> q;
+    queue<Node*> q;
     q.push(root);
 
     while (!q.empty()) {
-        treeNode* currNode = q.front();
+        Node* currNode = q.front();
         q.pop();
 
         cout << currNode->data << " ";
@@ -63,16 +76,15 @@ void bfs(treeNode* root) {
 
 
 
+
 int main(){
-treeNode* root=new treeNode(1);
-root->left=new treeNode(2);
-root->right=new treeNode(3);
-root->left->left=new treeNode(4);
-root->left->right=new treeNode(5);
-root->right->right=new treeNode(6);
-root->right->left=new treeNode(7);
+Node* root = nullptr;
+root = insert(root, 50);
+insert(root, 30);
+insert(root, 70);
+insert(root, 20);
+insert(root, 40);
 preorder(root);
-postorder(root);
-inorder(root);
+bfs(root);
 return 0;
 }

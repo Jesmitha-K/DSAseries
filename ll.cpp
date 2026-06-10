@@ -60,6 +60,60 @@ newnode->next =head->next;
 head->next=newnode;
 }
 
+
+// Delete from beginning
+void delBegin(Node*& head) {
+    if (head == nullptr) return;
+
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+}
+
+// Delete from end
+void delEnd(Node*& head) {
+    if (head == nullptr) return;
+
+    if (head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        return;
+    }
+
+    Node* temp = head;
+
+    while (temp->next->next != nullptr) {
+        temp = temp->next;
+    }
+
+    delete temp->next;
+    temp->next = nullptr;
+}
+
+// Delete from a given position 
+void delMiddle(Node*& head, int pos) {
+    if (head == nullptr) return;
+
+    if (pos == 1) {
+        delBegin(head);
+        return;
+    }
+
+    Node* temp = head;
+
+    for (int i = 1; i < pos - 1 && temp != nullptr; i++) {
+        temp = temp->next;
+    }
+
+    if (temp == nullptr || temp->next == nullptr)
+        return;
+
+    Node* nodeToDelete = temp->next;
+    temp->next = temp->next->next;
+
+    delete nodeToDelete;
+}
+
 int main(){
     Node* head;
     Node* n1=new Node(5);
@@ -73,6 +127,13 @@ int main(){
     traverse(head);
     addEnd(head,25);
     traverse(head);
+    delBegin(head);
+    traverse(head);
+    delEnd(head);
+    traverse(head);
+    delMiddle(head, 2);
+    traverse(head);
+
     
 
 }

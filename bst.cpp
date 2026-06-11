@@ -40,7 +40,7 @@ void inorder(Node* root) {
         return;
 
     inorder(root->left);
-    cout << root->data << " ";
+    cout << root->data << " "; //arr.push_back(root->val);
     inorder(root->right);
 }
 
@@ -64,7 +64,7 @@ void bfs(Node* root) {
         Node* currNode = q.front();
         q.pop();
 
-        cout << currNode->data << " ";
+        cout << currNode->data << " "; //arr.push_back(currNode->val);
 
         if (currNode->left != nullptr)
             q.push(currNode->left);
